@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
 import 'item.dart';
-import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:mailer/mailer.dart';
-import 'package:mailer/smtp_server.dart';
-final _firestore= Firestore.instance;
+final _firestore= FirebaseFirestore.instance;
 class BuyScreen extends StatefulWidget {
   @override
   int cost;
@@ -56,29 +51,10 @@ class _BuyScreenState extends State<BuyScreen> {
                     'address': 'A wing 1104',
                   }
               );
-              sendEmail();
             }, child: Text("Buy")),
           ],
         ),
       ),
     );
-  }
-}
-void sendEmail() async{
-  final email='darkknight131714@gmail.com';
-  String username='dakdr131714@gmail.com';
-  String password='prototype131714';
-  final smtpServer=gmail(email,password);
-  final message=Message()
-    ..from=Address(email,'Gautam')
-    ..recipients=['darkknight131714@gmail.com']
-    ..subject='New Order'
-    ..text='New Order Is placed on Firebase';
-  try{
-    await send(message,smtpServer);
-    print("Mail Sent");
-  }
-  on MailerException catch(e){
-    print(e);
   }
 }
