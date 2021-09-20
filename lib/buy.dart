@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'item.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 final _firestore= FirebaseFirestore.instance;
 class BuyScreen extends StatefulWidget {
   @override
@@ -34,6 +35,7 @@ class _BuyScreenState extends State<BuyScreen> {
     int cost=widget.cost;
     List<Item> cart=widget.cart;
     print(cost.toString());
+    Firebase.initializeApp();
     return Material(
       type: MaterialType.transparency,
       child: SafeArea(
@@ -43,6 +45,7 @@ class _BuyScreenState extends State<BuyScreen> {
             Text(cost.toString()),
             TextButton(onPressed: (){
               sendOrder(cart);
+              print("HELLO");
               _firestore.collection('orders').add(
                   {
                     'name': "Meenakshi",
