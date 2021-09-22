@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'item.dart';
 import 'buy.dart';
+import 'package:cupertino_icons/cupertino_icons.dart';
 List<Item> buy=[];
 class CartScreen extends StatefulWidget {
   List<Item> cart;
@@ -29,42 +31,52 @@ class _CartScreenState extends State<CartScreen> {
     /*24 is for notification bar on Android*/
     final double itemHeight = (size.height - kToolbarHeight - 24) / 2;
     final double itemWidth = size.width / 2;
-    return Material(
-      type: MaterialType.transparency,
-      child: Column(
-          children: [
-            Flexible(child: ListView.builder(
-                itemCount: cart.length,
-                itemBuilder: (BuildContext context, int index){
-                  return Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Container(
-                      child: Row(
-                        children: [
-                          Text(cart[index].name,style: TextStyle(fontSize: 20,color: Colors.white),),
-                          SizedBox(width: 40,),
-                          Text(cart[index].cost.toString(),style: TextStyle(fontSize: 30,color: Colors.white)),
-                          TextButton(onPressed: (){setState(() {
-                            cart[index].removeQuantity();
-                          });}, child: Text("-")),
-                          Text(cart[index].quantity!=0?cart[index].quantity.toString():"  ",style: TextStyle(fontSize: 40,color: Colors.white)),
-                          TextButton(onPressed: (){setState(() {
-                            cart[index].addQuantity();
-                          });}, child: Text("+")),
-                        ],
-                      ),
-                    ),
+    return MaterialApp(
+      theme: ThemeData.light(),
+      home: Material(
+        type: MaterialType.transparency,
+        child: Scaffold(
+          backgroundColor: Colors.white,
+          body: Column(
+              children: [
+                Flexible(child: ListView.builder(
+                    itemCount: cart.length,
+                    itemBuilder: (BuildContext context, int index){
+                      return Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Container(
+                          child: Row(
+                            children: [
+                              Text(cart[index].name,style: TextStyle(fontSize: 20,color: Colors.black),),
+                              SizedBox(width: 40,),
+                              Text(cart[index].cost.toString(),style: TextStyle(fontSize: 30,color: Colors.black)),
+                              TextButton(onPressed: (){setState(() {
+                                cart[index].reduceCart();
+                                if(cart[index].quantity==0){
+                                  cart.remove(cart[index]);
+                                  print(cart.length);
+                                }
+                              });}, child: Icon(CupertinoIcons.minus_circled,color: Colors.orange,)),
+                              Text(cart[index].quantity!=0?cart[index].quantity.toString():"  ",style: TextStyle(fontSize: 40,color: Colors.black),),
+                              TextButton(onPressed: (){setState(() {
+                                cart[index].increaseCart();
+                              });}, child: Icon(CupertinoIcons.add_circled,color: Colors.orange,)),
+                            ],
+                          ),
+                        ),
+                      );
+                    })),
+                TextButton(onPressed: (){
+                  int val=buyArea();
+                  print(val.toString());
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => BuyScreen(cost: val,cart: buy,)),
                   );
-                })),
-            TextButton(onPressed: (){
-              int val=buyArea();
-              print(val.toString());
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => BuyScreen(cost: val,cart: buy,)),
-              );
-            }, child: Text("Buy")),
-          ],
+                }, child: Text("Buy")),
+              ],
+          ),
+        ),
       ),
     );
   }

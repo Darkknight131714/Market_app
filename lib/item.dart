@@ -1,17 +1,28 @@
 class Item{
-  int cost,quantity;
+  int cost,quantity,addquantity=1;
   String name,image;
   Item({required this.cost,required this.name,required this.quantity,required this.image});
   void addQuantity(){
-    quantity++;
+    addquantity++;
   }
   void removeQuantity(){
-    if(quantity!=0){
-      quantity--;
+    if(addquantity!=1){
+      addquantity--;
     }
   }
   void removeCart(){
     quantity=0;
+  }
+  void addCart(){
+    quantity+=addquantity;
+  }
+  void reduceCart(){
+    if(quantity!=0){
+      quantity--;
+    }
+  }
+  void increaseCart(){
+    quantity++;
   }
 }
 List<Item> market=[
