@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:market_app/cart.dart';
 import 'package:cupertino_icons/cupertino_icons.dart';
 import 'item.dart';
+import 'dart:io';
 import 'package:flutter/services.dart';
+import 'package:delayed_display/delayed_display.dart';
 List<Item> cart=[];
 void main() {
   runApp(const MyApp());
 }
-
+String val="";
+bool isBot=false;
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -45,7 +48,7 @@ class _HomeState extends State<Home> {
     ]);
     /*24 is for notification bar on Android*/
     final double itemHeight = (size.height - kToolbarHeight - 24) / 2;
-    final double itemWidth = size.width / 2.75;
+    final double itemWidth = size.width / 2.85;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -64,13 +67,13 @@ class _HomeState extends State<Home> {
                 ],
               )
             ),
-            TextButton(onPressed: (){setState(() {
+            IconButton(onPressed: (){setState(() {
               makeCart();
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => CartScreen(cart: cart)),
               );
-            });},child: Icon(CupertinoIcons.cart,color: Colors.black,))
+            });},icon: Icon(CupertinoIcons.cart,color: Colors.black,))
           ],
         )
       ),
@@ -99,7 +102,7 @@ class _HomeState extends State<Home> {
                       Text(market[index].name,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
                       Text("₹"+market[index].cost.toString(),style: TextStyle(color: Colors.green,fontSize: 22,fontWeight: FontWeight.w500),),
                       Container(
-                        width: 140,
+                        width: size.width/3.2,
                         height: 40,
                         decoration: BoxDecoration(
                           border: Border.all(color: Colors.black),
@@ -108,20 +111,17 @@ class _HomeState extends State<Home> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            TextButton(onPressed: (){setState(() {
+                            IconButton(onPressed: (){setState(() {
+                              HapticFeedback.vibrate();
                               market[index].removeQuantity();
                             });},
-                                style: TextButton.styleFrom(
-                                  primary: Colors.orange,
-                                ),
-                                child: Icon(CupertinoIcons.minus_circled)),
+                                icon: Icon(CupertinoIcons.minus_circled,color: Colors.orange,)),
                             Text(market[index].addquantity.toString()),
-                            TextButton(onPressed: (){setState(() {
+                            IconButton(onPressed: (){setState(() {
                               market[index].addQuantity();
+                              HapticFeedback.vibrate();
                             });},
-                                style: TextButton.styleFrom(
-                                  primary: Colors.orange,
-                                ),child: Icon(CupertinoIcons.add_circled)),
+                                icon: Icon(CupertinoIcons.add_circled),color: Colors.orange,),
                           ],
                         ),
                       ),
@@ -135,6 +135,7 @@ class _HomeState extends State<Home> {
                           borderRadius: BorderRadius.all(Radius.circular(90)),
                         ),
                         child: TextButton(onPressed: (){
+                          HapticFeedback.vibrate();
                           market[index].addCart();
                         },
                             style: TextButton.styleFrom(
