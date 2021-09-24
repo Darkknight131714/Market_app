@@ -139,7 +139,7 @@ class _CartScreenState extends State<CartScreen> {
                     })),
                 Container(
                   // decoration: BoxDecoration(
-                  //   color: Colors.orange[400],
+                  //   color: Colors.orange[400], 
                   //
                   // ),
                   child:Row(

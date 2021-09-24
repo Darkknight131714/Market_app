@@ -41,6 +41,7 @@ dependencies:
   upi_india: ^3.0.1
   upi_pay: ^1.0.1
   delayed_display: ^2.0.0
+  mailer: ^5.0.2
 
 dev_dependencies:
   flutter_test:

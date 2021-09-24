@@ -145,7 +145,7 @@ class _BuyScreenState extends State<BuyScreen> {
                   );
                   Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => SuccessScreen())
+                      MaterialPageRoute(builder: (context) => SuccessScreen(name: name,order: order,))
                   );
                 }
                 else{
@@ -176,7 +176,7 @@ class _BuyScreenState extends State<BuyScreen> {
                                         );
                                         Navigator.push(
                                             context,
-                                            MaterialPageRoute(builder: (context) => SuccessScreen())
+                                            MaterialPageRoute(builder: (context) => SuccessScreen(name: name,order: order,))
                                         );
                                       }
                                       else if(status=="UpiTransactionStatus.submitted"){
@@ -192,7 +192,7 @@ class _BuyScreenState extends State<BuyScreen> {
                                         );
                                         Navigator.push(
                                             context,
-                                            MaterialPageRoute(builder: (context) => SuccessScreen())
+                                            MaterialPageRoute(builder: (context) => SuccessScreen(name: name,order: order,))
                                         );
                                       }
                                       else{
