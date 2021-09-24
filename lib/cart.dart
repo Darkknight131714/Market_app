@@ -14,6 +14,11 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   @override
+  int t=0;
+  void initState(){
+    super.initState();
+  }
+
   Widget build(BuildContext context) {
     List<Item> cart=widget.cart;
     int buyArea(){
@@ -28,7 +33,7 @@ class _CartScreenState extends State<CartScreen> {
       return cost;
     }
     var size = MediaQuery.of(context).size;
-
+    t= buyArea();
     /*24 is for notification bar on Android*/
     final double itemHeight = (size.height - kToolbarHeight - 24) / 2;
     final double itemWidth = size.width / 2;
@@ -85,6 +90,7 @@ class _CartScreenState extends State<CartScreen> {
                                           cart[index].removeCart();
                                           if(cart[index].quantity==0){
                                             cart.remove(cart[index]);
+                                            t=buyArea();
                                           }
                                         });
                                       },padding: EdgeInsets.all(0),
@@ -104,27 +110,49 @@ class _CartScreenState extends State<CartScreen> {
                                         if(cart[index].quantity==0){
                                           cart.remove(cart[index]);
                                         }
+                                        t=buyArea();
                                       });}, child: Icon(CupertinoIcons.minus_circled,color: Colors.orange,)),
                                       Text(cart[index].quantity.toString(),style: TextStyle(fontSize: 30,color: Colors.black),),
                                       TextButton(onPressed: (){setState(() {
                                         cart[index].increaseCart();
+                                        t=buyArea();
                                       });}, child: Icon(CupertinoIcons.add_circled,color: Colors.orange,)),
                                     ],
                                   ),
                                 ),
                               ],
                             ),
-                              Divider(thickness: 3,color: Colors.black,),
                               SizedBox(height: 10,),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Text(""),
+                                  Text("Total Cost of Item: ₹ "+ (cart[index].cost*cart[index].quantity).toString(),style: TextStyle(fontSize: 16),),
+                                ],
+                              ),
+
+                              Divider(thickness: 3,color: Colors.black,),
                             ],
                           ),
                         ),
                       );
                     })),
                 Container(
+                  // decoration: BoxDecoration(
+                  //   color: Colors.orange[400],
+                  //
+                  // ),
+                  child:Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text("Your Total is ",style: TextStyle(fontSize: 22,fontWeight:FontWeight.w600,color: Colors.green),),
+                      Text("₹ "+t.toString(),style: TextStyle(fontSize: 22,fontWeight:FontWeight.w300,color: Colors.red),),
+                    ],
+                  )
+                ),
+                Container(
                   decoration: BoxDecoration(
                     color: Colors.orange,
-                    border: Border.all(color: Colors.black,width: 3),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -141,7 +169,7 @@ class _CartScreenState extends State<CartScreen> {
                             );
                           });
                         },
-                        icon: Icon(CupertinoIcons.arrow_turn_down_right,color: Colors.white,),
+                        icon: Icon(CupertinoIcons.arrow_turn_down_right,color: Colors.green,),
                       )
                     ],
                   ),

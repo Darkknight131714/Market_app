@@ -246,8 +246,8 @@ Future doUpiTransaction(ApplicationMeta appMeta) async {
   final UpiTransactionResponse response = await UpiPay.initiateTransaction(
     amount: '1.00',
     app: appMeta.upiApplication,
-    receiverName: 'HEERA FASHIONS',
-    receiverUpiAddress: 'HEERAFASHIONS@SBI',
+    receiverName: 'Divyanshu',
+    receiverUpiAddress: 'Divyanshumeena321@okicici',
     transactionRef: 'UPITXREF0001',
     transactionNote: 'A UPI Transaction',
   );

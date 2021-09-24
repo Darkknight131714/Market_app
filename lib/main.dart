@@ -136,7 +136,18 @@ class _HomeState extends State<Home> {
                         ),
                         child: TextButton(onPressed: (){
                           HapticFeedback.vibrate();
-                          market[index].addCart();
+                          setState(() {
+                            market[index].addCart();
+                          });
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              duration: Duration(seconds: 2),
+                              behavior: SnackBarBehavior.floating,
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+                              backgroundColor: Colors.green,
+                              content: Text(market[index].name + " Added to Your Cart",style: TextStyle(color: Colors.white,),),
+                            ),
+                          );
                         },
                             style: TextButton.styleFrom(
                               primary: Colors.white,

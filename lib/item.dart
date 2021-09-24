@@ -15,6 +15,7 @@ class Item{
   }
   void addCart(){
     quantity+=addquantity;
+    addquantity=1;
   }
   void reduceCart(){
     if(quantity!=0){
